@@ -9,7 +9,6 @@
 @import "./pages/email-index.css";
 @import "./pages/email-details.css";
 @import "./pages/email-edit.css";
-@import "./pages/about.css";
 
 /* Components */
 @import "./cmps/email-list.css";
