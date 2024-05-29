@@ -1,9 +1,8 @@
 
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
-import './assets/css/index.css'
 
-import { HomePage } from './pages/HomePage'
-import { EmailIndex } from './pages/EmailIndex'
+import { HomePage } from './pages/HomePage';
+import { EmailIndex } from './pages/EmailIndex';
 export function App() {
 
     return (
