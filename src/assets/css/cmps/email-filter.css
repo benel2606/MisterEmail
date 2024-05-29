@@ -1,0 +1,16 @@
+.email-filter {
+    display: flex;
+    flex-wrap: wrap;
+    margin-block: 20px;
+    gap: 20px;
+
+}
+
+.email-filter>section {
+    display: flex;
+    flex-direction: column;
+}
+
+.email-filter>section:last-of-type {
+    justify-content: end;
+}
