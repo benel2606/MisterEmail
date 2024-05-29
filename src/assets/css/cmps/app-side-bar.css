@@ -1,0 +1,21 @@
+.app-side-bar{
+    grid-area: s;
+    display: grid;
+    gap: 15px;
+    align-content: start;
+    justify-content: center;
+    padding: 20px;
+}
+.app-side-bar button{
+    width: 150px;
+    border: none;
+    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    height: 56px;
+    padding: 0 24px 0 0;
+    border-radius: 20px;
+    transition: all 0.3s;
+    cursor: pointer;
+    background-color: #c2e7ff
+}

@@ -1,22 +1,29 @@
 .email-preview {
     background: #e96b9509;
     background-repeat: no-repeat;
-    box-shadow: 0 0 11px #0000002b;
-    padding: 15px;
+    /* box-shadow: 0 0 11px #0000002b; */
+    /* padding: 15px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    border-radius: 5px;
+    overflow: hidden; */
+    border-radius: 2px;
+    margin: 10px;
     cursor: pointer;
+    display: grid;
+    grid-template-columns: auto auto;
+    /* border: 1px solid black; */
 }
-
 
 .email-preview .info {
     padding: 10px;
     flex-grow: 1;
 }
 
-
+.email-preview button{
+    width: 2vw;
+    align-self: center;
+    justify-self: end;
+}
 
 .email-preview .actions a {
     color: white;

@@ -3,29 +3,27 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { HomePage } from './pages/HomePage';
 import { EmailIndex } from './pages/EmailIndex';
+import { AppHeader } from './cmps/AppHeader';
+import {AppSideBar} from './cmps/AppSideBar';
+import "./App.css"
 export function App() {
 
     return (
         <Router>
             <section className='main-app'>
-                <header className="app-header">
-                    <section className="container">
-                        <h1>Mister Email</h1>
-                    </section>
-                </header>
-            <main>
-
+                <AppHeader/>    
+                <AppSideBar/>
             <Routes>
-                    <Route path='/' element={<HomePage />} />
-                    <Route path='/email' element={<EmailIndex />} />
+                    {/* <Route path='/' element={<HomePage />} /> */}
+                    <Route path='/' element={<EmailIndex />} />
             </Routes>
-            </main>
+            
 
-            <footer>
+            {/* <footer>
                 <section className="container">
                     2024 &copy;
                 </section>
-            </footer>
+            </footer> */}
         </section>
     </Router>
 

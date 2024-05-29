@@ -57,6 +57,36 @@ input {
     text-align: inherit;
 }
 
+.main-app {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+    "h h"
+    "s l"
+    "s l";
+    background-color: #f7f8fc;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+/* .main-app main {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.main-app>footer {
+    background-color: #111;
+    color: white;
+}
+
+a.active {
+    color: rgb(84, 17, 147);
+    font-weight: 600;
+    font-size: 20px;
+} */
+
 /* MAC like scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
@@ -75,26 +105,4 @@ input {
 
 ::-webkit-scrollbar-thumb:vertical:active {
     -webkit-border-radius: 100px;
-}
-
-.main-app {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.main-app main {
-    flex-grow: 1;
-    width: 100%;
-}
-
-.main-app>footer {
-    background-color: #111;
-    color: white;
-}
-
-a.active {
-    color: rgb(84, 17, 147);
-    font-weight: 600;
-    font-size: 20px;
-}
+} 
