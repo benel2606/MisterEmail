@@ -1,6 +1,6 @@
 .app-header {
     color: black;
     grid-area: h;
-    height: 10vh;
-    padding: 25px;
+    /* height: 10vh; */
+    padding: 15px;
 }

@@ -1,15 +1,16 @@
 .email-preview {
-    background: #e96b9509;
+    background: #f2f6fc;
     background-repeat: no-repeat;
     /* box-shadow: 0 0 11px #0000002b; */
-    /* padding: 15px;
-    display: flex;
+    padding: 10px;
+    /*display: flex;
     flex-direction: column;
     overflow: hidden; */
     border-radius: 2px;
-    margin: 10px;
+    margin: 5px;
     cursor: pointer;
     display: grid;
+    /* width: 95%; */
     grid-template-columns: auto auto;
     /* border: 1px solid black; */
 }
