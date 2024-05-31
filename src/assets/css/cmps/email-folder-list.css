@@ -1,4 +1,4 @@
-.app-side-bar{
+.email-folder-list{
     grid-area: s;
     display: grid;
     gap: 15px;
@@ -6,7 +6,7 @@
     justify-content: center;
     padding: 20px;
 }
-.app-side-bar button{
+.email-folder-list button{
     width: 150px;
     border: none;
     font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;

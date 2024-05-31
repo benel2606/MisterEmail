@@ -58,17 +58,8 @@ input {
 }
 
 .main-app {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 6fr;
-    grid-template-rows: auto 1fr;
-    grid-template-areas: 
-    "h h"
-    "s l"
-    "s l";
-    background-color: #f7f8fc;
-    /* display: flex;
-    flex-direction: column; */
+    display: flex;
+    flex-direction: column;
 }
 
 /* .main-app main {
@@ -87,6 +78,10 @@ a.active {
     font-size: 20px;
 } */
 
+.react-icon{
+    vertical-align: bottom;
+    margin-inline-end: 15px;
+}
 /* MAC like scrollbar */
 ::-webkit-scrollbar {
     width: 8px;

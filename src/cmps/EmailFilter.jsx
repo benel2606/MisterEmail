@@ -1,52 +1,42 @@
 import { useEffect, useRef, useState } from "react"
+import { IoMdSearch } from "react-icons/io";
 import { emailService } from "../services/email.service"
+import { MdEdit } from "react-icons/md";
 
 
 export function EmailFilter({ filterBy, onSetFilterBy }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+    
     const formRef = useRef()
     // console.log('formRef:', formRef)
 
     useEffect(() => {
+        console.log(filterByToEdit)
         onSetFilterBy(filterByToEdit)
     }, [filterByToEdit])
 
     
     function handleChange({ target }) {
-        let { value, name: field, type } = target
-        value = type === 'number' ? +value : value
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
+        let { value } = target
+        value === 'number' ? +value : value
+        setFilterByToEdit(prevFilter => ({ ...prevFilter, value }))
     }
-
-    // function handleModelChange({ target }) {
-    //     const value = target.value
-    //     setFilterBy(prevFilter => ({ ...prevFilter, model: value }))
-    // }
-
-    // function handleMinBatteryChange({ target }) {
-    //     const value = target.value
-    //     setFilterBy(prevFilter => ({ ...prevFilter, minBatteryStatus: +value }))
-    // }
 
     function onSubmitFilter(ev) {
         ev.preventDefault()
         onSetFilterBy(filterByToEdit)
     }
 
-    const { model, minBatteryStatus } = filterByToEdit
+    const { search } = filterByToEdit
     return (
         <form ref={formRef} onSubmit={onSubmitFilter} className="email-filter">
             <section>
-                <label htmlFor="model">Model</label>
-                <input onChange={handleChange} name="model" id="model" type="text" value={model} />
-            </section>
-            <section>
-                <label htmlFor="minBatteryStatus">MinBatteryStatus</label>
-                <input onChange={handleChange} name="minBatteryStatus" id="minBatteryStatus" type="number" value={minBatteryStatus} />
-            </section>
-            <section>
-                <button>Submit</button>
+                <div className="search-form-input">
+                    <span><IoMdSearch className="react-icon" size={20}/></span>
+                    <input placeholder="Search mail"
+                    onChange={handleChange} name="search" id="search" type="text" value={search} />
+                </div>
             </section>
         </form>
     )

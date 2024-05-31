@@ -2,5 +2,9 @@
     color: black;
     grid-area: h;
     /* height: 10vh; */
-    padding: 15px;
+    /* padding: 15px; */
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 6fr;
+    margin-inline-start: 20px;
 }

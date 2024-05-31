@@ -15,15 +15,12 @@ const STORAGE_KEY = 'mails'
 _createMails()
 
 async function query(filterBy) {
-    const emails = await storageService.query(STORAGE_KEY)
-    // if (filterBy) {
-    //     var { type, maxBatteryStatus, minBatteryStatus, model } = filterBy
-    //     maxBatteryStatus = maxBatteryStatus || Infinity
-    //     minBatteryStatus = minBatteryStatus || 0
-    //     emails = emails.filter(email => email.type.toLowerCase().includes(type.toLowerCase()) && email.model.toLowerCase().includes(model.toLowerCase())
-    //         && (email.batteryStatus < maxBatteryStatus)
-    //         && email.batteryStatus > minBatteryStatus)
-    // }
+    let emails = await storageService.query(STORAGE_KEY)
+    if (filterBy) {
+        var { value } = filterBy
+        emails = emails.filter(email => email.subject.toLowerCase().includes(value.toLowerCase()) ||
+        email.body.toLowerCase().includes(value.toLowerCase()))
+    }
     return emails
 }
 
@@ -83,12 +80,13 @@ function _createMails() {
 
 function getDefaultFilter() {
     return {
-       subject:'',
-        body:'',
-        isRead:'',
-        isStarred:'',
-        sentAt:'',
-        removedAt:''
+        value:""
+        //subject:'',
+        // body:'',
+        // isRead:'',
+        // isStarred:'',
+        // sentAt:'',
+        // removedAt:''
     }
 }
 

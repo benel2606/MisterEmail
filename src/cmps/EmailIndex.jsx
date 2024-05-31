@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { emailService } from "../services/email.service.js"
 import { EmailList } from "../cmps/EmailList"
+import { AppHeader } from '../cmps/AppHeader'
+import { EmailFolderList } from '../cmps/EmailFolderList'
 // import { EmailFilter } from "../cmps/EmailFilter"
 
 export function EmailIndex() {
@@ -37,11 +39,13 @@ export function EmailIndex() {
 
     if (!emails) return <div>Loading...</div>
     return (
-        <section className="email-index">
-            <h1>Welcome! this is our emails</h1>
-            {/* <EmailFilter onSetFilterBy={onSetFilterBy} filterBy={filterBy} /> */}
-            <EmailList emails={emails} onRemoveEmail={onRemoveEmail} />
-            {/* <pre>{JSON.stringify(emails, null, 4)}</pre> */}
-        </section>
+       
+            <main className="email-index">
+                <AppHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />    
+                <EmailFolderList/>
+                <EmailList emails={emails} onRemoveEmail={onRemoveEmail} />
+                {/* <pre>{JSON.stringify(emails, null, 4)}</pre> */}
+            </main>
+       
     )
 }

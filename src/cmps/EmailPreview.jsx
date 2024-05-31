@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 
-
-
 export function EmailPreview({ email, onRemoveEmail }) {
 
     return (
