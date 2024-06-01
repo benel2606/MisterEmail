@@ -35,15 +35,21 @@ export function EmailIndex() {
     function onSetFilterBy(filterBy) {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
-
-
+    function onIsStarred() {
+        try {
+            console.log("onIsStarred")
+            loadEmails()
+        } catch (error) {
+            console.log('Having issues starred email:', error)
+        }
+    }
     if (!emails) return <div>Loading...</div>
     return (
        
             <main className="email-index">
                 <AppHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />    
                 <EmailFolderList/>
-                <EmailList emails={emails} onRemoveEmail={onRemoveEmail} />
+                <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onIsStarred={onIsStarred}/>
                 {/* <pre>{JSON.stringify(emails, null, 4)}</pre> */}
             </main>
        

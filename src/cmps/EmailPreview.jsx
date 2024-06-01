@@ -1,21 +1,46 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
-import { MdOutlineStarOutline } from "react-icons/md";
+import { AiOutlineStar } from "react-icons/ai";
+import { AiFillStar } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
+import { emailService } from "../services/email.service.js"
 
-export function EmailPreview({ email, onRemoveEmail }) {
+export function EmailPreview({ email, onRemoveEmail ,onIsStarred}) {
+    const [isStarred,setIsStarred]=useState(email.isStarred)
+    const [isRead,setIsRead]=useState(email.isRead)
+    
+    function onIsStarred(e){
+        e.preventDefault();
+        setIsStarred((isStarred)=>!isStarred)
+        email.isStarred = isStarred
+        emailService.update(email)
+        //onIsStarred()
+    }
+    function formattedDate(timestamp) {
+        const date = new Date(timestamp);
+        const formattedDate = date.toLocaleDateString()
+        return formattedDate
+    }
+
+    function onIsRead(e) {
+        console.log(isRead)
+        // setIsRead((isRead)=>!isRead)
+        email.isRead = true
+        emailService.update(email)
+        console.log(isRead)
+    }
 
     return (
         <article className="email-preview">
-            <div className="email-preview-container">
+            <div className={email.isRead===true?"email-preview-container":"email-preview-container bold"}>
                 <input type="checkbox"></input>
-                <MdOutlineStarOutline size={20}/>
-                <Link to={`/email/${email.id}`}>
-                    <h4>{email.subject}</h4>
-                    <h4>{email.body}</h4>
-                    <h4>{email.isStarred}</h4>
-                    <h4>{email.isRead}</h4>
-                    <h4>{email.removedAt}</h4>
-                    <h4>{email.sentAt}</h4>
+                <div className="star-icon-btn" onClick={onIsStarred}>
+                    {email.isStarred===true?<AiFillStar className="react-icon" color={"rgb(214 222 7)"} size={20}/>:<AiOutlineStar className="react-icon" color={"#00000073"} size={20}/>}
+                </div>
+                <Link to={`/email/${email.id}`} onClick={onIsRead}>
+                    <div>{email.subject}</div>
+                    <div>{email.body}</div>
+                    <div>{formattedDate(email.sentAt)}</div>
                 </Link>
             </div>
             <div onClick={() => onRemoveEmail(email.id)}><MdDelete className="react-icon before-padding" size={20}/></div>

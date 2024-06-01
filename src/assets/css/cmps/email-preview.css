@@ -3,32 +3,38 @@
     background-repeat: no-repeat;
     padding: 10px;
     border-radius: 2px;
-    margin: 5px;
     cursor: pointer;
     display: grid;
     grid-template-columns: auto auto;
+    border-block-end: 1px solid #bebdbdef ; /*rgba(215, 234, 238, 0.888);*/
+    align-items: center;  
+    /* justify-items: center; */
+    margin-inline: 2px;
 }
 .email-preview:hover{
     box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
     z-index: 2;
 }
 .email-preview .email-preview-container{
-    gap: 15px;
+    /* gap: 15px; */
     display: grid;
-    grid-template-columns:auto 1fr 10fr;
+    grid-template-columns:auto auto 10fr;
     list-style-type: none;
-   
+    justify-items: center;
+    align-items: center;   
 }
 
 .email-preview .email-preview-container a:hover {
     text-decoration: none;
 }
 
+.star-icon-btn{
+    padding: 10px;
+}
 .email-preview .email-preview-container a{
     gap: 15px;
     display: grid;
-    /* grid-template-columns:auto 1fr minmax(100px,1fr) 3fr 1fr 1fr auto auto auto; */
-    grid-template-columns:minmax(100px,1fr) 3fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: minmax(100px, 3fr) 30fr auto; 
     list-style-type: none;
 }
 .email-preview .info {
@@ -48,4 +54,12 @@
 
 .email-preview:hover .actions {
     transform: translateY(0);
+}
+.email-preview .react-icon:hover{
+    box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    z-index: 2; 
+}
+.email-preview-container.bold{
+    font-weight: bold;
+   
 }

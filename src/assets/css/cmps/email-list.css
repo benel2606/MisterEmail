@@ -1,10 +1,11 @@
 .email-list{
     list-style-type: none;
-    margin: 20px;
+    margin-inline: 20px;
     width: 95%;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px 0;
+    margin-block: 0;
 }
 
 .email-list .email-actions {

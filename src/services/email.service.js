@@ -7,7 +7,8 @@ export const emailService = {
     remove,
     getById,
     createMail,
-    getDefaultFilter
+    getDefaultFilter,
+    update
 }
 
 const STORAGE_KEY = 'mails'
@@ -39,6 +40,10 @@ function save(emailToSave) {
         emailToSave.isOn = false
         return storageService.post(STORAGE_KEY, emailToSave)
     }
+}
+
+function update(mail) {
+    return storageService.put(STORAGE_KEY, mail)
 }
 
 function createMail(subject = '', body = '', isRead = false, isStarred=false, sentAt=null, removedAt=null) {
@@ -81,12 +86,6 @@ function _createMails() {
 function getDefaultFilter() {
     return {
         value:""
-        //subject:'',
-        // body:'',
-        // isRead:'',
-        // isStarred:'',
-        // sentAt:'',
-        // removedAt:''
     }
 }
 

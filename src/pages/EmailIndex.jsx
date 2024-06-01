@@ -39,7 +39,7 @@ export function EmailIndex() {
     return (
         <section className="email-index">
             {/* <EmailFilter onSetFilterBy={onSetFilterBy} filterBy={filterBy} /> */}
-            <EmailList emails={emails} onRemoveEmail={onRemoveEmail} />
+            <EmailList emails={emails} onRemoveEmail={onRemoveEmail}/>
             {/* <pre>{JSON.stringify(emails, null, 4)}</pre> */}
         </section>
     )
