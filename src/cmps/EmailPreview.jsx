@@ -31,8 +31,8 @@ export function EmailPreview({ email, onRemoveEmail ,onIsStarred}) {
     }
 
     return (
-        <article className="email-preview">
-            <div className={email.isRead===true?"email-preview-container":"email-preview-container bold"}>
+        <article className={email.isRead===true?"email-preview":"email-preview is-read"}>
+            <div className="email-preview-container">
                 <input type="checkbox"></input>
                 <div className="star-icon-btn" onClick={onIsStarred}>
                     {email.isStarred===true?<AiFillStar className="react-icon" color={"rgb(214 222 7)"} size={20}/>:<AiOutlineStar className="react-icon" color={"#00000073"} size={20}/>}
