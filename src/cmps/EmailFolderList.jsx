@@ -1,30 +1,39 @@
 import { HiOutlineInbox } from "react-icons/hi2";
-import { CiStar } from "react-icons/ci";
+import { MdOutlineStarOutline } from "react-icons/md";
+import { MdOutlineStar } from "react-icons/md";
 import { RiSendPlane2Line } from "react-icons/ri";
 import { LuMails } from "react-icons/lu";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
+
+import { Link, NavLink } from "react-router-dom";
 import React from 'react'
 
 export function EmailFolderList () {
   return (
     <div className='email-folder-list'>
-      <button><MdEdit className="react-icon" size={20}/>Compose</button>
-      <div><HiOutlineInbox className="react-icon" size={20}/>
+        <button><MdEdit className="react-icon" size={20}/>Compose</button>
+      <NavLink className="email-folder-nav" to="/">
+        <HiOutlineInbox className="react-icon" size={20}/>
         Inbox
-      </div>
-      <div><CiStar className="react-icon" size={20}/>
+      </NavLink>
+      <NavLink className="email-folder-nav" to="/Starred">
+        <MdOutlineStarOutline className="react-icon" size={20}/>
         Starred
-      </div>
-      <div><RiSendPlane2Line className="react-icon" size={20}/>
+      </NavLink>
+      <NavLink className="email-folder-nav" to="/Sent">
+        <RiSendPlane2Line className="react-icon" size={20}/>
         Sent
-      </div>
-      <div><LuMails className="react-icon" size={20}/>
+      </NavLink>
+      <NavLink className="email-folder-nav" to="/AllMail">
+        <LuMails className="react-icon" size={20}/>
         All Mail
-      </div>
-      <div><FaRegTrashAlt className="react-icon" size={20}/>
+      </NavLink>
+      <NavLink className="email-folder-nav" to="/Trash">
+        <FaRegTrashAlt className="react-icon" size={20}/>
         Trash
-      </div>
+      </NavLink>
+      
     </div>
   )
 }

@@ -82,6 +82,13 @@ a.active {
     vertical-align: bottom;
     margin-inline-end: 15px;
 }
+.react-icon.before-padding{
+    margin-inline-start: 15px;
+}
+.black-fill{
+    /* fill:rgba(0, 0, 0, 0.227); */
+   
+}
 /* MAC like scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
