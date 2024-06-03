@@ -1,19 +1,19 @@
-.email-list{
-    list-style-type: none;
-    margin-inline: 20px;
-    width: 95%;
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px 0;
-    margin-block: 0;
+.email-list {
+  list-style-type: none;
+  margin-inline: 20px;
+  width: 95%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px 0;
+  /* margin-block: 0; */
 }
 
 .email-list .email-actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-basis: 25%;
-    padding: 10px;
-    background-color: #000000c9;
-    transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: 25%;
+  padding: 10px;
+  background-color: #000000c9;
+  transition: transform 0.2s;
 }

@@ -1,6 +1,11 @@
 .email-details {
+  margin-inline: 20px;
+  width: 95%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
   display: grid;
-  grid-template-rows: 1fr 1fr 6fr;
+  grid-template-rows: 1fr 1fr 1fr 6fr;
 }
 .email-details .subject {
   font-size: 2rem;
@@ -21,4 +26,11 @@
 }
 .sent-at {
   justify-self: end;
+}
+
+.email-details h4 {
+  align-self: start;
+  justify-self: center;
+  width: 80%;
+  margin-block-start: 100px;
 }

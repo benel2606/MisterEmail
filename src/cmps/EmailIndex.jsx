@@ -4,12 +4,14 @@ import { emailService } from "../services/email.service.js"
 import { EmailList } from "../cmps/EmailList"
 import { AppHeader } from "../cmps/AppHeader"
 import { EmailFolderList } from "../cmps/EmailFolderList"
+import { EmailCompose } from "./EmailCompose.jsx"
 
 // import { EmailFilter } from "../cmps/EmailFilter"
 
 export function EmailIndex() {
   const [emails, setEmails] = useState(null)
   const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
+  const [isEmailCmposeShow, setIsEmailCmposeShow] = useState(false)
   const params = useParams()
 
   useEffect(() => {
@@ -40,10 +42,6 @@ export function EmailIndex() {
     setFilterBy((prevFilter) => ({ ...prevFilter, ...filterBy }))
   }
 
-  function onIsRead(email) {
-    console.log("onIsRead", email)
-  }
-
   async function onToggleStarred(email) {
     try {
       console.log("onToggleStarred", email)
@@ -57,6 +55,7 @@ export function EmailIndex() {
   async function onIsRead(email) {
     try {
       console.log("onIsRead", email)
+      if (email.isRead === true) return
       await emailService.update({ ...email, isRead: !email.isRead })
       loadEmails()
     } catch (error) {
@@ -64,11 +63,16 @@ export function EmailIndex() {
     }
   }
 
+  function emailComposeHandle(isOpen) {
+    console.log("emailcomposeHandle", isOpen)
+    setIsEmailCmposeShow(isOpen)
+  }
+
   if (!emails) return <div>Loading...</div>
   return (
     <main className="email-index">
       <AppHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      <EmailFolderList />
+      <EmailFolderList emailComposeHandle={emailComposeHandle} />
       {params.emailId ? (
         <Outlet />
       ) : (
@@ -79,7 +83,9 @@ export function EmailIndex() {
           onToggleStarred={onToggleStarred}
         />
       )}
-      {/* <pre>{JSON.stringify(emails, null, 4)}</pre> */}
+      {isEmailCmposeShow && (
+        <EmailCompose emailComposeHandle={emailComposeHandle} />
+      )}
     </main>
   )
 }

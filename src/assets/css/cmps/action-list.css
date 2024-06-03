@@ -1,0 +1,6 @@
+.action-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  width: 10%;
+  gap: 2px;
+}
