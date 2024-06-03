@@ -1,0 +1,24 @@
+.email-details {
+  display: grid;
+  grid-template-rows: 1fr 1fr 6fr;
+}
+.email-details .subject {
+  font-size: 2rem;
+}
+.email-details .details {
+  display: grid;
+  grid-template-columns: auto auto 3fr 1fr;
+  gap: 5px;
+  grid-template-rows: auto auto;
+}
+.email-details .details img {
+  border-radius: 50%;
+}
+.sent-details {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+}
+.sent-at {
+  justify-self: end;
+}

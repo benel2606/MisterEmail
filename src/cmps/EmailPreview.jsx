@@ -11,12 +11,6 @@ export function EmailPreview({
   onIsRead,
   onToggleStarred,
 }) {
-  function formattedDate(timestamp) {
-    const date = new Date(timestamp)
-    const formattedDate = date.toLocaleDateString()
-    return formattedDate
-  }
-
   return (
     <article
       className={
@@ -51,7 +45,7 @@ export function EmailPreview({
                 : email.body}
             </span>
           </div>
-          <div>{formattedDate(email.sentAt)}</div>
+          <div>{emailService.formattedDate(email.sentAt, "EmailPreview")}</div>
         </Link>
       </div>
       <div onClick={() => onRemoveEmail(email.id)}>

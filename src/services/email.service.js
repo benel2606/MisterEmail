@@ -8,7 +8,8 @@ export const emailService = {
     getById,
     createMail,
     getDefaultFilter,
-    update
+    update,
+    formattedDate
 }
 
 const STORAGE_KEY = 'mails'
@@ -132,5 +133,10 @@ function getDefaultFilter() {
     }
 }
 
-
+function formattedDate(timestamp, fromComponent) {
+    const date = new Date(timestamp)
+    return fromComponent == "EmailPreview"
+      ? date.toLocaleDateString()
+      : date.toLocaleString()
+  }
 

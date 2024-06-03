@@ -16,15 +16,23 @@ export function EmailDetails() {
   }
   if (!email) return <div>Loading...</div>
   return (
-    <>
-      {/* <article className="email-details"> */}
-      <h4>{email.subject}</h4>
+    <article className="email-details">
+      <div className="subject">{email.subject}</div>
+      <div className="details">
+        <img
+          src="https://lh3.googleusercontent.com/a/default-user=s40-p"
+          alt="defult-user"
+        />
+        <div className="sent-details">
+          <div>{email.fromName}</div>
+          <div className="from-mail">{`<${email.fromEmail}>`}</div>
+          <div>to me</div>
+        </div>
+        <div className="sent-at">
+          {emailService.formattedDate(email.sentAt, "EmailDetasils")}
+        </div>
+      </div>
       <h4>{email.body}</h4>
-      <h4>{email.isStarred}</h4>
-      <h4>{email.isRead}</h4>
-      <h4>{email.removedAt}</h4>
-      <h4>{email.sentAt}</h4>
-      {/* </article> */}
-    </>
+    </article>
   )
 }
