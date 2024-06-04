@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { Outlet, useParams } from "react-router"
+import { useParams } from "react-router"
+import { useLocation, Outlet } from "react-router-dom"
 import { emailService } from "../services/email.service.js"
 import { EmailList } from "../cmps/EmailList"
 import { AppHeader } from "../cmps/AppHeader"
@@ -13,6 +14,9 @@ export function EmailIndex() {
   const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
   const [isEmailCmposeShow, setIsEmailCmposeShow] = useState(false)
   const params = useParams()
+  const location = useLocation()
+
+  console.log(location)
 
   useEffect(() => {
     loadEmails()
