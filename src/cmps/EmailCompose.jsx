@@ -28,7 +28,6 @@ export function EmailCompose({ emailComposeHandle }) {
         <form onSubmit={sendMailHandle}>
           <input type="text" placeholder="Recipients" name="recipients"></input>
           <input type="text" placeholder="Subject" name="subject"></input>
-          {/* <textarea id="freeform" name="freeform" rows="50" cols="50" /> */}
           <div className="textwrapper">
             <textarea cols="2" rows="10" id="body" name="body" />
           </div>

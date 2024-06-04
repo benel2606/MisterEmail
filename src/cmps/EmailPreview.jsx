@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { AiOutlineStar } from "react-icons/ai"
 import { AiFillStar } from "react-icons/ai"
 import { MdDelete } from "react-icons/md"
@@ -11,6 +11,9 @@ export function EmailPreview({
   onIsRead,
   onToggleStarred,
 }) {
+  const location = useLocation()
+  let currentLocation = emailService.getCurrentLocation(location)
+
   return (
     <article
       className={
@@ -34,7 +37,7 @@ export function EmailPreview({
             />
           )}
         </div>
-        <Link to={`/email/${email.id}`} onClick={onIsRead}>
+        <Link to={`/${currentLocation}/${email.id}`} onClick={onIsRead}>
           <div>{email.fromName}</div>
           <div>
             {email.subject}

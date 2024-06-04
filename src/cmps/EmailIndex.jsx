@@ -15,16 +15,21 @@ export function EmailIndex() {
   const [isEmailCmposeShow, setIsEmailCmposeShow] = useState(false)
   const params = useParams()
   const location = useLocation()
-
-  console.log(location)
+  const currentLocation = emailService.getCurrentLocation(location)
 
   useEffect(() => {
     loadEmails()
   }, [filterBy])
 
+  useEffect(() => {
+    loadEmails()
+  }, [location])
+
   async function loadEmails() {
     try {
-      const emails = await emailService.query(filterBy)
+      const combinedFilter = { currentLocation, filterBy }
+      // const emails = await emailService.query(filterBy)
+      const emails = await emailService.query(combinedFilter)
       setEmails(emails)
     } catch (error) {
       console.log("Having issues with loading emails:", error)

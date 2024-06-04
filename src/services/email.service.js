@@ -9,19 +9,26 @@ export const emailService = {
     createMail,
     getDefaultFilter,
     update,
-    formattedDate
+    formattedDate,
+    getCurrentLocation
 }
 
 const STORAGE_KEY = 'mails'
 
 _createMails()
 
-async function query(filterBy) {
+async function query(filter) {
     let emails = await storageService.query(STORAGE_KEY)
-    if (filterBy) {
-        var { value } = filterBy
+    if (filter) {
+        var {value}  = filter.filterBy
+        var currentLocation=filter.currentLocation
+
         emails = emails.filter(email => email.subject.toLowerCase().includes(value.toLowerCase()) ||
-        email.body.toLowerCase().includes(value.toLowerCase()))
+        email.body.toLowerCase().includes(value.toLowerCase())||email.fromName.toLowerCase().includes(value.toLowerCase()))
+
+        if (currentLocation.includes('Starred')) {
+            emails = emails.filter(email => email.isStarred)
+        }
     }
     return emails
 }
@@ -138,5 +145,10 @@ function formattedDate(timestamp, fromComponent) {
     return fromComponent == "EmailPreview"
       ? date.toLocaleDateString()
       : date.toLocaleString()
+  }
+
+  function getCurrentLocation(location){
+    let currentLocation = location.pathname.split("/").pop()
+    return currentLocation === "" ? "inbox" : currentLocation
   }
 
