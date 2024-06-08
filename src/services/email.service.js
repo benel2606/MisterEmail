@@ -10,7 +10,8 @@ export const emailService = {
     getDefaultFilter,
     update,
     formattedDate,
-    getCurrentLocation
+    getCurrentLocation,
+    getLoggedUser
 }
 
 const STORAGE_KEY = 'mails'
@@ -26,8 +27,16 @@ async function query(filter) {
         emails = emails.filter(email => email.subject.toLowerCase().includes(value.toLowerCase()) ||
         email.body.toLowerCase().includes(value.toLowerCase())||email.fromName.toLowerCase().includes(value.toLowerCase()))
 
-        if (currentLocation.includes('Starred')) {
+        console.log(emails)
+        console.log(currentLocation)
+        if (currentLocation.includes('inbox')) {
+            emails = emails.filter(email => email.folder=='inbox')
+        }
+        if (currentLocation.includes('starred')) {
             emails = emails.filter(email => email.isStarred)
+        }
+        if (currentLocation.includes('sent')) {
+            emails = emails.filter(email => email.folder=='sent')
         }
     }
     return emails
@@ -54,14 +63,19 @@ function update(mail) {
     return storageService.put(STORAGE_KEY, mail)
 }
 
-function createMail(subject = '', body = '', isRead = false, isStarred=false, sentAt=null, removedAt=null) {
+function createMail(fromEmail='',toEmail='',fromName='',toName='',subject = '', body = '', isRead = false, isStarred=false, sentAt=null, removedAt=null,folder='') {
     return {
+        fromEmail,
+        toEmail,
+        fromName,
+        toName,
         subject,
         body,
         isRead,
         isStarred,
         sentAt,
-        removedAt
+        removedAt,
+        folder
     }
 }
 
@@ -79,7 +93,8 @@ function _createMails() {
                 "body": "neque. Sed eget lacus. Mauris non dui nec urna suscipit",
                 "isStarred": false,
                 "isRead": false,
-                "sentAt": 1702121830000
+                "sentAt": 1702121830000,
+                "folder":"inbox"
             },
             {
                 "fromEmail": "nibh.dolor@aol.edu",
@@ -91,7 +106,8 @@ function _createMails() {
                 "body": "est mauris, rhoncus id, mollis nec, cursus a, enim. Suspendisse aliquet, sem ut cursus luctus, ipsum leo elementum sem, vitae aliquam eros turpis non enim. Mauris quis turpis vitae purus gravida sagittis. Duis gravida. Praesent eu nulla at sem molestie sodales. Mauris blandit enim",
                 "isStarred": false,
                 "isRead": true,
-                "sentAt": 1692681843000
+                "sentAt": 1692681843000,
+                "folder":"sent"
             },
             {
                 "fromEmail": "non.lobortis@yahoo.org",
@@ -103,7 +119,8 @@ function _createMails() {
                 "body": "hendrerit id, ante. Nunc mauris sapien, cursus in, hendrerit consectetuer, cursus et, magna. Praesent interdum ligula eu enim. Etiam imperdiet dictum magna. Ut tincidunt orci quis lectus.",
                 "isStarred": true,
                 "isRead": false,
-                "sentAt": 1701695441000
+                "sentAt": 1701695441000,
+                "folder":"inbox"
             },
             {
                 "fromEmail": "lorem@aol.com",
@@ -115,7 +132,8 @@ function _createMails() {
                 "body": "rutrum lorem ac risus. Morbi metus. Vivamus euismod urna. Nullam lobortis quam a felis ullamcorper viverra. Maecenas iaculis",
                 "isStarred": true,
                 "isRead": true,
-                "sentAt": 1738635793000
+                "sentAt": 1738635793000,
+                "folder":"sent"
             },
             {
                 "fromEmail": "tortor@outlook.ca",
@@ -127,7 +145,8 @@ function _createMails() {
                 "body": "sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum",
                 "isStarred": true,
                 "isRead": false,
-                "sentAt": 1727177520000
+                "sentAt": 1727177520000,
+                "folder":"inbox"
             }
         ]
         utilService.saveToStorage(STORAGE_KEY, emails)
@@ -152,3 +171,7 @@ function formattedDate(timestamp, fromComponent) {
     return currentLocation === "" ? "inbox" : currentLocation
   }
 
+  function getLoggedUser() {
+        return { email: 'benel2606@gmail.com', fullname: 'Benel Aharon' }
+
+}

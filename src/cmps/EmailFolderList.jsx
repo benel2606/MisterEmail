@@ -20,19 +20,19 @@ export function EmailFolderList({ emailComposeHandle }) {
         <HiOutlineInbox className="react-icon" size={20} />
         Inbox
       </NavLink>
-      <NavLink className="email-folder-nav" to="/Starred">
+      <NavLink className="email-folder-nav" to="/starred">
         <MdOutlineStarOutline className="react-icon" size={20} />
         Starred
       </NavLink>
-      <NavLink className="email-folder-nav" to="/Sent">
+      <NavLink className="email-folder-nav" to="/sent">
         <RiSendPlane2Line className="react-icon" size={20} />
         Sent
       </NavLink>
-      <NavLink className="email-folder-nav" to="/AllMail">
+      <NavLink className="email-folder-nav" to="/all-mail">
         <LuMails className="react-icon" size={20} />
         All Mail
       </NavLink>
-      <NavLink className="email-folder-nav" to="/Trash">
+      <NavLink className="email-folder-nav" to="/trash">
         <FaRegTrashAlt className="react-icon" size={20} />
         Trash
       </NavLink>

@@ -11,7 +11,22 @@ export function EmailCompose({ emailComposeHandle }) {
       subject: ev.target.subject.value,
       body: ev.target.body.value,
     }
-    console.log(formValues)
+    const loggedUser = emailService.getLoggedUser()
+    let emailToSave = emailService.createMail(
+      loggedUser.email,
+      ev.target.recipients.value,
+      loggedUser.fullname,
+      ev.target.recipients.value.split("@")[0],
+      ev.target.subject.value,
+      ev.target.subject.body,
+      true,
+      false,
+      Date.now(),
+      "",
+      "sent"
+    )
+    console.log(emailToSave)
+    emailService.save(emailToSave)
   }
   return (
     <section className="email-compose">
