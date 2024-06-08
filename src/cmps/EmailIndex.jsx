@@ -50,11 +50,19 @@ export function EmailIndex() {
     }
   }
 
-  async function onRemoveEmail(emailId) {
+  async function onRemoveEmail(email) {
     try {
-      await emailService.remove(emailId)
+      if (email.removedAt) {
+        await emailService.remove(email.id)
+      } else {
+        await emailService.update({
+          ...email,
+          removedAt: Date.now(),
+          folder: "trash",
+        })
+      }
       setEmails((prevEmails) =>
-        prevEmails.filter((email) => email.id !== emailId)
+        prevEmails.filter((storedEmail) => storedEmail.id !== email.id)
       )
     } catch (error) {
       console.log("Having issues removing email:", error)

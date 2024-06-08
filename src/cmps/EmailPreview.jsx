@@ -51,7 +51,7 @@ export function EmailPreview({
           <div>{emailService.formattedDate(email.sentAt, "EmailPreview")}</div>
         </Link>
       </div>
-      <div onClick={() => onRemoveEmail(email.id)}>
+      <div onClick={onRemoveEmail}>
         <MdDelete className="react-icon before-padding" size={20} />
       </div>
     </article>

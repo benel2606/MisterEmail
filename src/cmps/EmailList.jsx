@@ -12,7 +12,7 @@ export function EmailList({
         <li key={email.id}>
           <EmailPreview
             email={email}
-            onRemoveEmail={onRemoveEmail}
+            onRemoveEmail={() => onRemoveEmail(email)}
             onIsRead={() => onIsRead(email)}
             onToggleStarred={() => onToggleStarred(email)}
           />

@@ -32,10 +32,13 @@ async function query(filterBy) {
                 emails = emails.filter(email => email.folder=='inbox')
              }
             if (status.includes('starred')) {
-                emails = emails.filter(email => email.isStarred)
+                emails = emails.filter(email => (email.isStarred)&&(!email.removedAt))
              }
             if (status.includes('sent')) {
                 emails = emails.filter(email => email.folder=='sent')
+            }
+            if (status.includes('trash')) {
+                emails = emails.filter(email => email.removedAt)
             }
         }
         return emails
@@ -96,7 +99,8 @@ function _createMails() {
                 "isStarred": false,
                 "isRead": false,
                 "sentAt": 1702121830000,
-                "folder":"inbox"
+                "folder":"inbox",
+                "removedAt":null
             },
             {
                 "fromEmail": "nibh.dolor@aol.edu",
@@ -109,7 +113,8 @@ function _createMails() {
                 "isStarred": false,
                 "isRead": true,
                 "sentAt": 1692681843000,
-                "folder":"sent"
+                "folder":"sent",
+                "removedAt":null
             },
             {
                 "fromEmail": "non.lobortis@yahoo.org",
@@ -122,7 +127,8 @@ function _createMails() {
                 "isStarred": true,
                 "isRead": false,
                 "sentAt": 1701695441000,
-                "folder":"inbox"
+                "folder":"inbox",
+                "removedAt":null
             },
             {
                 "fromEmail": "lorem@aol.com",
@@ -135,7 +141,8 @@ function _createMails() {
                 "isStarred": true,
                 "isRead": true,
                 "sentAt": 1738635793000,
-                "folder":"sent"
+                "folder":"sent",
+                "removedAt":null
             },
             {
                 "fromEmail": "tortor@outlook.ca",
@@ -148,7 +155,8 @@ function _createMails() {
                 "isStarred": true,
                 "isRead": false,
                 "sentAt": 1727177520000,
-                "folder":"inbox"
+                "folder":"inbox",
+                "removedAt":null
             }
         ]
         utilService.saveToStorage(STORAGE_KEY, emails)
