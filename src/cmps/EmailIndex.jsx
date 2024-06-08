@@ -89,7 +89,7 @@ export function EmailIndex() {
 
   async function onIsRead(email) {
     try {
-      if (email.isRead === true) return
+      // if (email.isRead === true) return
       await emailService.update({ ...email, isRead: !email.isRead })
       loadEmails()
     } catch (error) {
@@ -99,6 +99,9 @@ export function EmailIndex() {
 
   function emailComposeHandle(isOpen) {
     setIsEmailCmposeShow(isOpen)
+  }
+  function onArchive(email) {
+    console.log("onArchive")
   }
 
   if (!emails) return <div>Loading...</div>
@@ -114,6 +117,7 @@ export function EmailIndex() {
           onRemoveEmail={onRemoveEmail}
           onIsRead={onIsRead}
           onToggleStarred={onToggleStarred}
+          onArchive={onArchive}
         />
       )}
       {isEmailCmposeShow && (

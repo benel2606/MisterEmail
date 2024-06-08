@@ -1,24 +1,31 @@
 import { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { AiOutlineStar } from "react-icons/ai"
-import { AiFillStar } from "react-icons/ai"
+import { AiOutlineStar, AiFillStar } from "react-icons/ai"
 import { MdDelete } from "react-icons/md"
 import { emailService } from "../services/email.service.js"
+import { EmailPreviewAction } from "./EmailPreviewAction.jsx"
 
 export function EmailPreview({
   email,
   onRemoveEmail,
   onIsRead,
   onToggleStarred,
+  onArchive,
 }) {
   const location = useLocation()
   let currentLocation = emailService.getCurrentLocation(location)
+  const [onHovered, setOnHovered] = useState(false)
+
+  function onClickEmail() {
+    onIsRead({ ...email, isRead: true })
+  }
 
   return (
     <article
-      className={
-        email.isRead === true ? "email-preview" : "email-preview is-read"
-      }
+      className={`email-preview
+        ${email.isRead === true ? "is-read" : ""}`}
+      onMouseOver={() => setOnHovered(true)}
+      onMouseLeave={() => setOnHovered(false)}
     >
       <div className="email-preview-container">
         <input type="checkbox"></input>
@@ -37,7 +44,7 @@ export function EmailPreview({
             />
           )}
         </div>
-        <Link to={`/${currentLocation}/${email.id}`} onClick={onIsRead}>
+        <Link to={`/${currentLocation}/${email.id}`} onClick={onClickEmail}>
           <div>{email.fromName}</div>
           <div>
             {email.subject}
@@ -51,9 +58,14 @@ export function EmailPreview({
           <div>{emailService.formattedDate(email.sentAt, "EmailPreview")}</div>
         </Link>
       </div>
-      <div onClick={onRemoveEmail}>
-        <MdDelete className="react-icon before-padding" size={20} />
-      </div>
+      {onHovered && (
+        <EmailPreviewAction
+          email={email}
+          onRemoveEmail={() => onRemoveEmail(email)}
+          onIsRead={() => onIsRead(email)}
+          onArchive={() => onArchive(email)}
+        />
+      )}
     </article>
   )
 }

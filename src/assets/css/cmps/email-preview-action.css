@@ -1,0 +1,5 @@
+.email-preview-action {
+  display: flex;
+  gap: 6px;
+  margin-inline: 10px;
+}

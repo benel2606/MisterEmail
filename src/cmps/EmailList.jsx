@@ -5,6 +5,7 @@ export function EmailList({
   onRemoveEmail,
   onIsRead,
   onToggleStarred,
+  onArchive,
 }) {
   return (
     <ul className="email-list">
@@ -15,10 +16,8 @@ export function EmailList({
             onRemoveEmail={() => onRemoveEmail(email)}
             onIsRead={() => onIsRead(email)}
             onToggleStarred={() => onToggleStarred(email)}
+            onArchive={() => onArchive(email)}
           />
-          {/* <section className="email-actions">
-                        <button onClick={() => onRemoveEmail(email.id)}>X</button>
-                    </section> */}
         </li>
       ))}
     </ul>
