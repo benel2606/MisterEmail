@@ -5,19 +5,16 @@ import { MdEdit } from "react-icons/md"
 
 export function EmailFilter({ filterBy, onSetFilterBy }) {
   const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
-
   const formRef = useRef()
-  // console.log('formRef:', formRef)
 
   useEffect(() => {
-    console.log(filterByToEdit)
     onSetFilterBy(filterByToEdit)
   }, [filterByToEdit])
 
   function handleChange({ target }) {
-    let { value } = target
-    value === "number" ? +value : value
-    setFilterByToEdit((prevFilter) => ({ ...prevFilter, value }))
+    let { value, name: field, type } = target
+    value = type === "number" ? +value : value
+    setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
   }
 
   function onSubmitFilter(ev) {
@@ -25,7 +22,7 @@ export function EmailFilter({ filterBy, onSetFilterBy }) {
     onSetFilterBy(filterByToEdit)
   }
 
-  const { search } = filterByToEdit
+  const { txt } = filterByToEdit
   return (
     <form ref={formRef} onSubmit={onSubmitFilter} className="email-filter">
       <section>
@@ -36,10 +33,10 @@ export function EmailFilter({ filterBy, onSetFilterBy }) {
           <input
             placeholder="Search mail"
             onChange={handleChange}
-            name="search"
+            name="txt"
             id="search"
             type="text"
-            value={search}
+            value={txt}
           />
         </div>
       </section>

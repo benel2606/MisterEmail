@@ -11,37 +11,39 @@ export const emailService = {
     update,
     formattedDate,
     getCurrentLocation,
-    getLoggedUser
+    getLoggedUser,
+    getFilterFromSearchParams
 }
 
 const STORAGE_KEY = 'mails'
 
 _createMails()
 
-async function query(filter) {
-    let emails = await storageService.query(STORAGE_KEY)
-    if (filter) {
-        var {value}  = filter.filterBy
-        var currentLocation=filter.currentLocation
+async function query(filterBy) {
+    console.log("filterBy",filterBy)
+    try {
+        let emails = await storageService.query(STORAGE_KEY)
+        if (filterBy) {
+            let {txt,status}=filterBy
+            emails = emails.filter(email => email.subject.toLowerCase().includes(txt.toLowerCase()) ||
+            email.body.toLowerCase().includes(txt.toLowerCase())||email.fromName.toLowerCase().includes(txt.toLowerCase()))
 
-        emails = emails.filter(email => email.subject.toLowerCase().includes(value.toLowerCase()) ||
-        email.body.toLowerCase().includes(value.toLowerCase())||email.fromName.toLowerCase().includes(value.toLowerCase()))
-
-        console.log(emails)
-        console.log(currentLocation)
-        if (currentLocation.includes('inbox')) {
-            emails = emails.filter(email => email.folder=='inbox')
+            if (status.includes('inbox')) {
+                emails = emails.filter(email => email.folder=='inbox')
+             }
+            if (status.includes('starred')) {
+                emails = emails.filter(email => email.isStarred)
+             }
+            if (status.includes('sent')) {
+                emails = emails.filter(email => email.folder=='sent')
+            }
         }
-        if (currentLocation.includes('starred')) {
-            emails = emails.filter(email => email.isStarred)
-        }
-        if (currentLocation.includes('sent')) {
-            emails = emails.filter(email => email.folder=='sent')
-        }
-    }
-    return emails
+        return emails
+    }catch (error) {
+    console.log('error:', error)
+    throw error
 }
-
+}
 function getById(id) {
     return storageService.get(STORAGE_KEY, id)
 }
@@ -155,7 +157,8 @@ function _createMails() {
 
 function getDefaultFilter() {
     return {
-        value:""
+        txt:"",
+        status:""
     }
 }
 
@@ -173,5 +176,17 @@ function formattedDate(timestamp, fromComponent) {
 
   function getLoggedUser() {
         return { email: 'benel2606@gmail.com', fullname: 'Benel Aharon' }
+
+}
+function getFilterFromSearchParams(searchParams) {
+    // const filterBy = {
+    //     type: searchParams.get('type')
+    // }
+    const defaultFilter = getDefaultFilter()
+    const filterBy = {}
+    for (const field in defaultFilter) {
+        filterBy[field] = searchParams.get(field) || ''
+    }
+    return filterBy
 
 }

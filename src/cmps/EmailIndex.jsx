@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router"
-import { useLocation, Outlet } from "react-router-dom"
+import {
+  useLocation,
+  Outlet,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom"
 import { emailService } from "../services/email.service.js"
 import { EmailList } from "../cmps/EmailList"
 import { AppHeader } from "../cmps/AppHeader"
@@ -11,25 +16,34 @@ import { EmailCompose } from "./EmailCompose.jsx"
 
 export function EmailIndex() {
   const [emails, setEmails] = useState(null)
-  const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [filterBy, setFilterBy] = useState(
+    emailService.getFilterFromSearchParams(searchParams)
+  )
   const [isEmailCmposeShow, setIsEmailCmposeShow] = useState(false)
   const params = useParams()
   const location = useLocation()
+  const navigate = useNavigate()
   const currentLocation = emailService.getCurrentLocation(location)
 
   useEffect(() => {
+    setSearchParams(filterBy)
     loadEmails()
   }, [filterBy])
 
   useEffect(() => {
+    // setSearchParams({ txt: "", status: params.folder })
+    setFilterBy((prevFilter) => ({
+      ...prevFilter,
+      ...filterBy,
+      status: params.folder,
+    }))
     loadEmails()
-  }, [location])
+  }, [params.folder])
 
   async function loadEmails() {
     try {
-      const combinedFilter = { currentLocation, filterBy }
-      // const emails = await emailService.query(filterBy)
-      const emails = await emailService.query(combinedFilter)
+      const emails = await emailService.query(filterBy)
       setEmails(emails)
     } catch (error) {
       console.log("Having issues with loading emails:", error)
@@ -48,12 +62,16 @@ export function EmailIndex() {
   }
 
   function onSetFilterBy(filterBy) {
-    setFilterBy((prevFilter) => ({ ...prevFilter, ...filterBy }))
+    setFilterBy((prevFilter) => ({
+      ...prevFilter,
+      ...filterBy,
+      status: currentLocation,
+    }))
+    console.log("onSetFilterBy", filterBy)
   }
 
   async function onToggleStarred(email) {
     try {
-      console.log("onToggleStarred", email)
       await emailService.update({ ...email, isStarred: !email.isStarred })
       loadEmails()
     } catch (error) {
@@ -63,7 +81,6 @@ export function EmailIndex() {
 
   async function onIsRead(email) {
     try {
-      console.log("onIsRead", email)
       if (email.isRead === true) return
       await emailService.update({ ...email, isRead: !email.isRead })
       loadEmails()
@@ -73,7 +90,6 @@ export function EmailIndex() {
   }
 
   function emailComposeHandle(isOpen) {
-    console.log("emailcomposeHandle", isOpen)
     setIsEmailCmposeShow(isOpen)
   }
 
