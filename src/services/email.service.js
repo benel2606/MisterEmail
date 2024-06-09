@@ -38,6 +38,9 @@ async function query(filterBy) {
             if (status.includes('sent')) {
                 emails = emails.filter(email => email.folder=='sent')
             }
+            if (status.includes('all-mail')) {
+                emails = emails.filter(email => !email.removedAt)
+            }
             if (status.includes('trash')) {
                 emails = emails.filter(email => email.removedAt)
             }

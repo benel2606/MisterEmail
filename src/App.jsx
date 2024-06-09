@@ -4,6 +4,7 @@ import { EmailIndex } from "./cmps/EmailIndex"
 import { AppHeader } from "./cmps/AppHeader"
 import { EmailFolderList } from "./cmps/EmailFolderList"
 import { EmailDetails } from "./cmps/EmailDetails"
+import { UserMsg } from "./cmps/UserMsg"
 
 import "./App.css"
 export function App() {
@@ -16,6 +17,7 @@ export function App() {
             <Route path="/:folder/:emailId" element={<EmailDetails />} />
           </Route>
         </Routes>
+        <UserMsg />
       </section>
     </Router>
   )

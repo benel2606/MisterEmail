@@ -11,8 +11,7 @@ import { EmailList } from "../cmps/EmailList"
 import { AppHeader } from "../cmps/AppHeader"
 import { EmailFolderList } from "../cmps/EmailFolderList"
 import { EmailCompose } from "./EmailCompose.jsx"
-
-// import { EmailFilter } from "../cmps/EmailFilter"
+import { showSuccessMsg } from "../services/event-bus.service"
 
 export function EmailIndex() {
   const [emails, setEmails] = useState(null)
@@ -55,13 +54,16 @@ export function EmailIndex() {
     try {
       if (email.removedAt) {
         await emailService.remove(email.id)
+        showSuccessMsg("Conversation deleted forever.")
       } else {
         await emailService.update({
           ...email,
           removedAt: Date.now(),
           folder: "trash",
         })
+        showSuccessMsg("Conversation moved to Trash.")
       }
+      updateCounters()
       setEmails((prevEmails) =>
         prevEmails.filter((storedEmail) => storedEmail.id !== email.id)
       )
@@ -79,7 +81,7 @@ export function EmailIndex() {
     console.log("onSetFilterBy", filterBy)
   }
   async function updateCounters() {
-    const emails = await emailService.query({ txt: "", status: "all-mail" })
+    const emails = await emailService.query({ txt: "", status: "" })
     setUnreadEmailCounter(emailService.countUnreadEmails(emails))
     console.log("unreadEmailCounter", unreadEmailCounter)
   }
