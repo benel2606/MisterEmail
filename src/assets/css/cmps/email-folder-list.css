@@ -1,49 +1,61 @@
-.email-folder-list{
-    grid-area: s;
-    display: grid;
-    height: 10%;
+.email-folder-list {
+  grid-area: s;
+  display: grid;
+  height: 10%;
 }
-.email-folder-list button{
-    width: 150px;
-    border: none;
-    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
-    font-size: 0.875rem;
-    font-weight: 500;
-    height: 56px;
-    padding: 0 24px 0 0;
-    border-radius: 20px;
-    transition: all 0.3s;
-    cursor: pointer;
-    background-color: #c2e7ff;
-    margin-block-end: 20px;
-    margin-inline-start: 8px;
+.email-folder-list button {
+  width: 150px;
+  border: none;
+  font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  height: 56px;
+  padding: 0 24px 0 0;
+  border-radius: 20px;
+  transition: all 0.3s;
+  cursor: pointer;
+  background-color: #c2e7ff;
+  margin-block-end: 20px;
+  margin-inline-start: 8px;
 }
-.email-folder-list .email-folder-nav{
-    padding: 10px;
-    border-radius: 0 20px 20px 0;
-    text-decoration: none;
-    padding: 10px 0;
-    margin-right: 20px;
-    padding-left: 20px;
+.email-folder-list .email-folder-nav {
+  padding: 10px;
+  border-radius: 0 20px 20px 0;
+  text-decoration: none;
+  padding: 10px 0;
+  margin-right: 20px;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .email-folder-nav {
-    display: block;
-    text-decoration: none;
-    color: black;
-    padding: 10px 0;
-    flex-grow: 1;
-    border-radius: 0 20px 20px 0;
+  display: block;
+  text-decoration: none;
+  color: black;
+  padding: 10px 0;
+  flex-grow: 1;
+  border-radius: 0 20px 20px 0;
 }
 
 .email-folder-nav:hover {
-    background-color: #c4d9e6;
-    text-decoration: none;
-    font-weight: normal;
+  background-color: #c4d9e6;
+  text-decoration: none;
+  font-weight: normal;
 }
 
 .email-folder-nav.active {
-    background-color: #c1e7fe;
-    text-decoration: none;
-    font-weight: normal;
+  background-color: #c1e7fe;
+  text-decoration: none;
+  font-weight: normal;
+}
+.email-folder-list .email-folder-nav .folder-label {
+  width: 40%;
+  justify-content: end;
+}
+.email-folder-list .email-folder-nav .counter {
+  display: flex;
+  width: 55%;
+  justify-content: end;
+  padding-inline: 15px;
 }

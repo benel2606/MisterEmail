@@ -12,7 +12,8 @@ export const emailService = {
     formattedDate,
     getCurrentLocation,
     getLoggedUser,
-    getFilterFromSearchParams
+    getFilterFromSearchParams,
+    countUnreadEmails
 }
 
 const STORAGE_KEY = 'mails'
@@ -40,6 +41,7 @@ async function query(filterBy) {
             if (status.includes('trash')) {
                 emails = emails.filter(email => email.removedAt)
             }
+            
         }
         return emails
     }catch (error) {
@@ -187,14 +189,20 @@ function formattedDate(timestamp, fromComponent) {
 
 }
 function getFilterFromSearchParams(searchParams) {
-    // const filterBy = {
-    //     type: searchParams.get('type')
-    // }
     const defaultFilter = getDefaultFilter()
     const filterBy = {}
     for (const field in defaultFilter) {
         filterBy[field] = searchParams.get(field) || ''
     }
     return filterBy
-
+}
+function countUnreadEmails(emails) {
+    const unreadEmails = {}
+    const Unread = emails.filter(email =>email.isRead === false);
+    unreadEmails.allMail = Unread.filter(email => !email.removedAt ).length || 0;
+    unreadEmails.inbox = Unread.filter(email => email.folder ==="inbox" ).length || 0;
+    unreadEmails.sent = Unread.filter(email => email.folder ==="sent" ).length || 0;
+    unreadEmails.starred = Unread.filter(email => email.isStarred && !email.removedAt).length || 0;
+    unreadEmails.trash = Unread.filter(email => email.removedAt ).length || 0;
+    return unreadEmails;
 }

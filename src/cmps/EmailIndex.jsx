@@ -20,6 +20,7 @@ export function EmailIndex() {
   const [filterBy, setFilterBy] = useState(
     emailService.getFilterFromSearchParams(searchParams)
   )
+  const [unreadEmailCounter, setUnreadEmailCounter] = useState({})
   const [isEmailCmposeShow, setIsEmailCmposeShow] = useState(false)
   const params = useParams()
   const location = useLocation()
@@ -32,7 +33,6 @@ export function EmailIndex() {
   }, [filterBy])
 
   useEffect(() => {
-    // setSearchParams({ txt: "", status: params.folder })
     setFilterBy((prevFilter) => ({
       ...prevFilter,
       ...filterBy,
@@ -43,6 +43,7 @@ export function EmailIndex() {
 
   async function loadEmails() {
     try {
+      updateCounters()
       const emails = await emailService.query(filterBy)
       setEmails(emails)
     } catch (error) {
@@ -77,7 +78,11 @@ export function EmailIndex() {
     }))
     console.log("onSetFilterBy", filterBy)
   }
-
+  async function updateCounters() {
+    const emails = await emailService.query({ txt: "", status: "all-mail" })
+    setUnreadEmailCounter(emailService.countUnreadEmails(emails))
+    console.log("unreadEmailCounter", unreadEmailCounter)
+  }
   async function onToggleStarred(email) {
     try {
       await emailService.update({ ...email, isStarred: !email.isStarred })
@@ -100,6 +105,7 @@ export function EmailIndex() {
   function emailComposeHandle(isOpen) {
     setIsEmailCmposeShow(isOpen)
   }
+
   function onArchive(email) {
     console.log("onArchive")
   }
@@ -108,7 +114,10 @@ export function EmailIndex() {
   return (
     <main className="email-index">
       <AppHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-      <EmailFolderList emailComposeHandle={emailComposeHandle} />
+      <EmailFolderList
+        emailComposeHandle={emailComposeHandle}
+        unreadEmailCounter={unreadEmailCounter}
+      />
       {params.emailId ? (
         <Outlet />
       ) : (
