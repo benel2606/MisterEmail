@@ -6,6 +6,7 @@ export function EmailList({
   onIsRead,
   onToggleStarred,
   onArchive,
+  onToggleIsRead,
 }) {
   return (
     <ul className="email-list">
@@ -17,6 +18,7 @@ export function EmailList({
             onIsRead={() => onIsRead(email)}
             onToggleStarred={() => onToggleStarred(email)}
             onArchive={() => onArchive(email)}
+            onToggleIsRead={() => onToggleIsRead(email)}
           />
         </li>
       ))}

@@ -94,13 +94,24 @@ export function EmailIndex() {
     }
   }
 
-  async function onIsRead(email) {
+  async function onToggleIsRead(email) {
+    console.log("onToggleIsRead", email)
     try {
-      // if (email.isRead === true) return
       await emailService.update({ ...email, isRead: !email.isRead })
       loadEmails()
     } catch (error) {
-      console.log("Having issues starred email:", error)
+      console.log("Having issues isRead email:", error)
+    }
+  }
+
+  async function onIsRead(email) {
+    console.log("onIsRead", email)
+    try {
+      if (email.isRead === true) return
+      await emailService.update({ ...email, isRead: !email.isRead })
+      loadEmails()
+    } catch (error) {
+      console.log("Having issues isRead email:", error)
     }
   }
 
@@ -129,6 +140,7 @@ export function EmailIndex() {
           onIsRead={onIsRead}
           onToggleStarred={onToggleStarred}
           onArchive={onArchive}
+          onToggleIsRead={onToggleIsRead}
         />
       )}
       {isEmailCmposeShow && (

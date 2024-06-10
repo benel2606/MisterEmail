@@ -11,6 +11,7 @@ export function EmailPreview({
   onIsRead,
   onToggleStarred,
   onArchive,
+  onToggleIsRead,
 }) {
   const location = useLocation()
   let currentLocation = emailService.getCurrentLocation(location)
@@ -44,7 +45,7 @@ export function EmailPreview({
             />
           )}
         </div>
-        <Link to={`/${currentLocation}/${email.id}`} onClick={onClickEmail}>
+        <Link to={`/${currentLocation}/${email.id}`} onClick={onIsRead}>
           <div>{email.fromName}</div>
           <div>
             {email.subject}
@@ -62,7 +63,7 @@ export function EmailPreview({
         <EmailPreviewAction
           email={email}
           onRemoveEmail={() => onRemoveEmail(email)}
-          onIsRead={() => onIsRead(email)}
+          onToggleIsRead={() => onToggleIsRead(email)}
           onArchive={() => onArchive(email)}
         />
       )}

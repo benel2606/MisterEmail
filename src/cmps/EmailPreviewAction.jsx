@@ -5,7 +5,7 @@ import { GoRead } from "react-icons/go"
 export function EmailPreviewAction({
   email,
   onRemoveEmail,
-  onIsRead,
+  onToggleIsRead,
   onArchive,
 }) {
   const location = useLocation()
@@ -14,7 +14,7 @@ export function EmailPreviewAction({
       <div onClick={onRemoveEmail}>
         <MdDelete size={20} />
       </div>
-      <div onClick={onIsRead}>
+      <div onClick={onToggleIsRead}>
         {email.isRead ? (
           <GoRead size={20} />
         ) : (
