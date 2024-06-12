@@ -1,4 +1,5 @@
 import { EmailPreview } from "./EmailPreview"
+import { EmailListAction } from "./EmailListAction"
 
 export function EmailList({
   emails,
@@ -7,9 +8,12 @@ export function EmailList({
   onToggleStarred,
   onArchive,
   onToggleIsRead,
+  sortBy,
+  setSortBy,
 }) {
   return (
     <ul className="email-list">
+      <EmailListAction sortBy={sortBy} setSortBy={setSortBy} />
       {emails.map((email) => (
         <li key={email.id}>
           <EmailPreview

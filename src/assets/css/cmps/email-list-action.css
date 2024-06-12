@@ -1,0 +1,16 @@
+.email-list-action {
+  display: flex;
+}
+.email-list-action button {
+  width: 100px;
+  border: 1px solid black;
+  font-size: 0.875rem;
+  font-weight: 500;
+  height: 30px;
+  border-radius: 10px;
+  transition: all 0.3s;
+  cursor: pointer;
+  background-color: transparent;
+  margin-block-end: 20px;
+  margin-inline-start: 8px;
+}

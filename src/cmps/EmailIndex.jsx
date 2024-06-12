@@ -21,6 +21,7 @@ export function EmailIndex() {
   )
   const [unreadEmailCounter, setUnreadEmailCounter] = useState({})
   const [isEmailCmposeShow, setIsEmailCmposeShow] = useState(false)
+  const [sortBy, setSortBy] = useState({ sort: "date", direct: true })
   const params = useParams()
   const location = useLocation()
   const navigate = useNavigate()
@@ -29,7 +30,7 @@ export function EmailIndex() {
   useEffect(() => {
     setSearchParams(filterBy)
     loadEmails()
-  }, [filterBy])
+  }, [filterBy, sortBy])
 
   useEffect(() => {
     setFilterBy((prevFilter) => ({
@@ -43,7 +44,7 @@ export function EmailIndex() {
   async function loadEmails() {
     try {
       updateCounters()
-      const emails = await emailService.query(filterBy)
+      const emails = await emailService.query(filterBy, sortBy)
       setEmails(emails)
     } catch (error) {
       console.log("Having issues with loading emails:", error)
@@ -81,7 +82,7 @@ export function EmailIndex() {
     console.log("onSetFilterBy", filterBy)
   }
   async function updateCounters() {
-    const emails = await emailService.query({ txt: "", status: "" })
+    const emails = await emailService.query({ txt: "", status: "" }, sortBy)
     setUnreadEmailCounter(emailService.countUnreadEmails(emails))
     console.log("unreadEmailCounter", unreadEmailCounter)
   }
@@ -122,7 +123,9 @@ export function EmailIndex() {
   function onArchive(email) {
     console.log("onArchive")
   }
-
+  function onSortBy(sort) {
+    console.log(sort)
+  }
   if (!emails) return <div>Loading...</div>
   return (
     <main className="email-index">
@@ -136,6 +139,8 @@ export function EmailIndex() {
       ) : (
         <EmailList
           emails={emails}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
           onRemoveEmail={onRemoveEmail}
           onIsRead={onIsRead}
           onToggleStarred={onToggleStarred}

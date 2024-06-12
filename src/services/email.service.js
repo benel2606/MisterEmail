@@ -20,8 +20,9 @@ const STORAGE_KEY = 'mails'
 
 _createMails()
 
-async function query(filterBy) {
+async function query(filterBy,sortBy) {
     console.log("filterBy",filterBy)
+    console.log("sort",sortBy)
     try {
         let emails = await storageService.query(STORAGE_KEY)
         if (filterBy) {
@@ -44,7 +45,17 @@ async function query(filterBy) {
             if (status.includes('trash')) {
                 emails = emails.filter(email => email.removedAt)
             }
-            
+            if (sortBy) {
+                if (sortBy.sort==='date'){
+                    emails=sortBy.direct?emails.sort((a,b)=>b.sentAt-a.sentAt):emails=emails.sort((a,b)=>a.sentAt-b.sentAt)
+                }
+                if (sortBy.sort==='read'){
+                    emails=sortBy.direct?emails.sort((a,b)=>a.isRead-b.isRead):emails.sort((a,b)=>b.isRead-a.isRead)
+                }
+                if (sortBy.sort==='starred'){
+                    emails=sortBy.direct?emails.sort((a,b)=>b.isStarred-a.isStarred):emails.sort((a,b)=>a.isStarred-b.isStarred)
+                }
+            }
         }
         return emails
     }catch (error) {
