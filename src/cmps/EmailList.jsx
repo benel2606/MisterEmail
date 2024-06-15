@@ -14,18 +14,20 @@ export function EmailList({
   return (
     <ul className="email-list">
       <EmailListAction sortBy={sortBy} setSortBy={setSortBy} />
-      {emails.map((email) => (
-        <li key={email.id}>
-          <EmailPreview
-            email={email}
-            onRemoveEmail={() => onRemoveEmail(email)}
-            onIsRead={() => onIsRead(email)}
-            onToggleStarred={() => onToggleStarred(email)}
-            onArchive={() => onArchive(email)}
-            onToggleIsRead={() => onToggleIsRead(email)}
-          />
-        </li>
-      ))}
+      <ul>
+        {emails.map((email) => (
+          <li key={email.id}>
+            <EmailPreview
+              email={email}
+              onRemoveEmail={() => onRemoveEmail(email)}
+              onIsRead={() => onIsRead(email)}
+              onToggleStarred={() => onToggleStarred(email)}
+              onArchive={() => onArchive(email)}
+              onToggleIsRead={() => onToggleIsRead(email)}
+            />
+          </li>
+        ))}
+      </ul>
     </ul>
   )
 }

@@ -39,7 +39,7 @@
 .email-preview .email-preview-container a {
   gap: 15px;
   display: grid;
-  grid-template-columns: minmax(150px, 3fr) 30fr auto;
+  grid-template-columns: minmax(150px, 3fr) auto auto 30fr auto;
   list-style-type: none;
 }
 .email-preview .email-preview-container a span {
@@ -72,4 +72,36 @@
 .email-preview.is-read {
   background: #f7f8fc;
   font-weight: lighter;
+}
+
+@media only screen and (max-width: 768px) {
+  .email-preview .email-preview-container a {
+    gap: 3px;
+    display: grid;
+    grid-template-columns: 3fr auto;
+    list-style-type: none;
+    padding-block: 10px;
+    grid-template-areas:
+      "body body"
+      "subject subject"
+      "from sent";
+  }
+  .email-preview .email-from {
+    font-size: larger;
+    grid-area: from;
+  }
+  .email-preview .email-subject {
+    font-size: medium;
+    grid-area: subject;
+  }
+  .email-preview .email-from {
+    grid-area: body;
+  }
+  .email-preview .email-sent-at {
+    font-size: small;
+    grid-area: sent;
+  }
+  .email-preview .email-separator {
+    display: none;
+  }
 }

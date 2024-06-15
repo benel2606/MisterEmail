@@ -55,23 +55,23 @@ export function EmailPreview({
           }
           onClick={onIsRead}
         >
-          {currentLocation == "draft" ? "[Draft]" : <div>{email.fromName}</div>}
-          <div>
-            {email.subject}
-            <span>
-              -{" "}
-              {email.body.length > 100
-                ? email.body.substring(0, 90) + "..."
-                : email.body}
-            </span>
+          <div className="email-from">
+            {" "}
+            {currentLocation == "draft" ? "[Draft]" : email.fromName}
           </div>
-          {email.sentAt ? (
-            <div>
-              {emailService.formattedDate(email.sentAt, "EmailPreview")}
-            </div>
-          ) : (
-            <div>Draft</div>
-          )}
+
+          <div className="email-subject">{email.subject}</div>
+          <div className="email-separator">-</div>
+          <div className="email-body">
+            {email.body.length > 100
+              ? email.body.substring(0, 90) + "..."
+              : email.body}
+          </div>
+          <div className="email-sent-at">
+            {email.sentAt
+              ? emailService.formattedDate(email.sentAt, "EmailPreview")
+              : "Draft"}
+          </div>
         </Link>
       </div>
       {onHovered && (

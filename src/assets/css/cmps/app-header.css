@@ -11,3 +11,15 @@
 .app-header img {
   width: 80%;
 }
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .app-header {
+    grid-template-columns: 1fr;
+    margin-inline-start: 0;
+    justify-items: center;
+  }
+  .app-header img {
+    width: 50%;
+  }
+}
