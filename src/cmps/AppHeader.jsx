@@ -8,7 +8,8 @@ export function AppHeader({ filterBy, onSetFilterBy }) {
     <section className="app-header">
       {/* <div>Mister Email</div> */}
       <img
-        src="../../MisterEmail/src/assets/imgs/mister-email-logo.png"
+        // src="../../MisterEmail/src/assets/imgs/mister-email-logo.png"
+        src="../MisterEmail/src/assets/imgs/mister-email-logo.png"
         alt="logo"
       />
       <EmailFilter onSetFilterBy={onSetFilterBy} filterBy={filterBy} />
