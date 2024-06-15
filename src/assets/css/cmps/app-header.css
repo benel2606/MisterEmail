@@ -8,3 +8,6 @@
   grid-template-columns: 1fr 6fr;
   margin-inline-start: 20px;
 }
+.app-header img {
+  width: 80%;
+}

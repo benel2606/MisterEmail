@@ -1,11 +1,13 @@
 .email-list {
   list-style-type: none;
   margin-inline: 20px;
-  width: 95%;
+  /* width: 95%; */
   background-color: #fff;
   border-radius: 10px;
   padding: 20px 0;
   /* margin-block: 0; */
+  height: 35rem;
+  overflow-x: scroll;
 }
 
 .email-list .email-actions {

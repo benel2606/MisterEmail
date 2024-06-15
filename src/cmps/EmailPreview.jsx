@@ -20,7 +20,9 @@ export function EmailPreview({
   function onClickEmail() {
     onIsRead({ ...email, isRead: true })
   }
-
+  function getEditPath(mail) {
+    return `/${currentLocation}?compose=${mail.id}`
+  }
   return (
     <article
       className={`email-preview
@@ -45,18 +47,31 @@ export function EmailPreview({
             />
           )}
         </div>
-        <Link to={`/${currentLocation}/${email.id}`} onClick={onIsRead}>
-          <div>{email.fromName}</div>
+        <Link
+          to={
+            currentLocation == "draft"
+              ? `/${currentLocation}?compose=${email.id}`
+              : `/${currentLocation}/${email.id}`
+          }
+          onClick={onIsRead}
+        >
+          {currentLocation == "draft" ? "[Draft]" : <div>{email.fromName}</div>}
           <div>
             {email.subject}
             <span>
               -{" "}
               {email.body.length > 100
-                ? email.body.substring(0, 100) + "..."
+                ? email.body.substring(0, 90) + "..."
                 : email.body}
             </span>
           </div>
-          <div>{emailService.formattedDate(email.sentAt, "EmailPreview")}</div>
+          {email.sentAt ? (
+            <div>
+              {emailService.formattedDate(email.sentAt, "EmailPreview")}
+            </div>
+          ) : (
+            <div>Draft</div>
+          )}
         </Link>
       </div>
       {onHovered && (
@@ -65,6 +80,7 @@ export function EmailPreview({
           onRemoveEmail={() => onRemoveEmail(email)}
           onToggleIsRead={() => onToggleIsRead(email)}
           onArchive={() => onArchive(email)}
+          currentLocation={currentLocation}
         />
       )}
     </article>

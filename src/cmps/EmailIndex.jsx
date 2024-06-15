@@ -11,7 +11,7 @@ import { EmailList } from "../cmps/EmailList"
 import { AppHeader } from "../cmps/AppHeader"
 import { EmailFolderList } from "../cmps/EmailFolderList"
 import { EmailCompose } from "./EmailCompose.jsx"
-import { showSuccessMsg } from "../services/event-bus.service"
+import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service"
 
 export function EmailIndex() {
   const [emails, setEmails] = useState(null)
@@ -26,11 +26,13 @@ export function EmailIndex() {
   const location = useLocation()
   const navigate = useNavigate()
   const currentLocation = emailService.getCurrentLocation(location)
+  const compose = searchParams.get("compose")
 
   useEffect(() => {
-    setSearchParams(filterBy)
+    //setSearchParams(filterBy)
+    renderSearchParams()
     loadEmails()
-  }, [filterBy, sortBy])
+  }, [filterBy, sortBy, params.folder])
 
   useEffect(() => {
     setFilterBy((prevFilter) => ({
@@ -41,9 +43,14 @@ export function EmailIndex() {
     loadEmails()
   }, [params.folder])
 
+  useEffect(() => {
+    updateCounters()
+  }, [emails])
+
   async function loadEmails() {
+    console.log("loadMails")
     try {
-      updateCounters()
+      // updateCounters()
       const emails = await emailService.query(filterBy, sortBy)
       setEmails(emails)
     } catch (error) {
@@ -60,11 +67,10 @@ export function EmailIndex() {
         await emailService.update({
           ...email,
           removedAt: Date.now(),
-          folder: "trash",
         })
         showSuccessMsg("Conversation moved to Trash.")
       }
-      updateCounters()
+      // updateCounters()
       setEmails((prevEmails) =>
         prevEmails.filter((storedEmail) => storedEmail.id !== email.id)
       )
@@ -116,22 +122,68 @@ export function EmailIndex() {
     }
   }
 
-  function emailComposeHandle(isOpen) {
-    setIsEmailCmposeShow(isOpen)
-  }
-
   function onArchive(email) {
     console.log("onArchive")
   }
-  function onSortBy(sort) {
-    console.log(sort)
+
+  async function onAddEmail(mail) {
+    try {
+      const savedMail = await emailService.save({ ...mail })
+      if (
+        (params.folder === "sent" && savedMail.sentAt) ||
+        (params.folder === "draft" && !savedMail.sentAt)
+      ) {
+        setEmails((prevMails) => [savedMail, ...prevMails])
+      }
+      const msg = !savedMail.sentAt
+        ? "Mail saved to draft"
+        : "Mail Sent to " + savedMail.to
+      showSuccessMsg(msg)
+      return savedMail
+    } catch (err) {
+      showErrorMsg("Sending mail failed")
+      console.log("Had issues sending mail", err)
+    }
   }
+  async function onUpdateEmail(emailToSave) {
+    try {
+      const updatedMail = await emailService.save(emailToSave)
+      if (params.folder === "draft" && updatedMail.sentAt) {
+        setEmails((prevMails) =>
+          prevMails.filter((m) => m.id !== updatedMail.id)
+        )
+      } else if (params.folder === "sent" && updatedMail.sentAt) {
+        setEmails((prevMails) => [updatedMail, ...prevMails])
+      } else {
+        console.log("onUpdateMail")
+        setEmails((prevMails) =>
+          prevMails.map((mail) =>
+            mail.id === updatedMail.id ? updatedMail : mail
+          )
+        )
+      }
+    } catch (err) {
+      showErrorMsg("Can not update mail")
+      console.log("Had issues updating mail", err)
+    }
+  }
+
+  function renderSearchParams() {
+    const filterForParams = {
+      txt: filterBy.txt || "",
+      status: filterBy.status || "inbox",
+      compose: searchParams.get("compose") || "",
+    }
+    setSearchParams(filterForParams)
+  }
+
   if (!emails) return <div>Loading...</div>
   return (
     <main className="email-index">
       <AppHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
       <EmailFolderList
-        emailComposeHandle={emailComposeHandle}
+        currentLocation={currentLocation}
+        searchParams={searchParams}
         unreadEmailCounter={unreadEmailCounter}
       />
       {params.emailId ? (
@@ -148,8 +200,15 @@ export function EmailIndex() {
           onToggleIsRead={onToggleIsRead}
         />
       )}
-      {isEmailCmposeShow && (
-        <EmailCompose emailComposeHandle={emailComposeHandle} />
+      {!!compose && (
+        <EmailCompose
+          onAddEmail={onAddEmail}
+          onUpdateEmail={onUpdateEmail}
+          searchParams={searchParams}
+          folder={params.folder}
+          // emailComposeHandle={emailComposeHandle}
+          // onUpdateEmail={onUpdateEmail}
+        />
       )}
     </main>
   )
