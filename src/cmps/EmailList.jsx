@@ -10,9 +10,10 @@ export function EmailList({
   onToggleIsRead,
   sortBy,
   setSortBy,
+  collapse,
 }) {
   return (
-    <ul className="email-list">
+    <ul className={`email-list ${collapse ? "toggle-collapse-mobile" : ""}`}>
       <EmailListAction sortBy={sortBy} setSortBy={setSortBy} />
       <ul>
         {emails.map((email) => (

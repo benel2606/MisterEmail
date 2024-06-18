@@ -56,16 +56,44 @@
   width: 40%;
   justify-content: end;
 }
-.email-folder-list .email-folder-nav .counter {
+/* .email-folder-list .email-folder-nav  */
+.email-folder-list .counter {
   display: flex;
   width: 55%;
   justify-content: end;
   padding-inline: 15px;
 }
 
+/* .email-folder-list button.is-collapse {
+  width: 50px;
+}
+.email-folder-list button.is-collapse .compose-label {
+  display: none;
+} */
+@media only screen and (min-width: 992px) {
+  .email-folder-list .is-collapse:not(button, .react-icon) {
+    display: none;
+  }
+  .email-folder-list button.is-collapse {
+    width: 50px;
+  }
+  .email-folder-list .react-icon.is-collapse {
+    padding-left: 7px;
+    width: 40px;
+  }
+}
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   .email-folder-list {
     display: none;
+  }
+
+  .email-folder-list.toggle-collapse-mobile {
+    position: fixed;
+    background-color: white;
+    height: 100%;
+    display: block;
+    padding-block-start: 50px;
+    width: 65%;
   }
 }

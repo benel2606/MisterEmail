@@ -9,14 +9,17 @@
     "s l";
   background-color: #f7f8fc;
 }
+.email-index.is-collapse {
+  grid-template-columns: auto 6fr;
+}
 
 @media only screen and (max-width: 768px) {
   .email-index {
     /* For mobile phones: */
     grid-template-columns: 1fr;
-    grid-template-areas:
+    /* grid-template-areas:
       "h h"
       "l l"
-      "l l";
+      "l l"; */
   }
 }

@@ -22,6 +22,7 @@ export function EmailIndex() {
   const [unreadEmailCounter, setUnreadEmailCounter] = useState({})
   const [isEmailCmposeShow, setIsEmailCmposeShow] = useState(false)
   const [sortBy, setSortBy] = useState({ sort: "date", direct: true })
+  const [collapse, setCollapse] = useState(false)
   const params = useParams()
   const location = useLocation()
   const navigate = useNavigate()
@@ -29,7 +30,6 @@ export function EmailIndex() {
   const compose = searchParams.get("compose")
 
   useEffect(() => {
-    //setSearchParams(filterBy)
     renderSearchParams()
     loadEmails()
   }, [filterBy, sortBy, params.folder])
@@ -50,7 +50,6 @@ export function EmailIndex() {
   async function loadEmails() {
     console.log("loadMails")
     try {
-      // updateCounters()
       const emails = await emailService.query(filterBy, sortBy)
       setEmails(emails)
     } catch (error) {
@@ -70,7 +69,6 @@ export function EmailIndex() {
         })
         showSuccessMsg("Conversation moved to Trash.")
       }
-      // updateCounters()
       setEmails((prevEmails) =>
         prevEmails.filter((storedEmail) => storedEmail.id !== email.id)
       )
@@ -102,7 +100,6 @@ export function EmailIndex() {
   }
 
   async function onToggleIsRead(email) {
-    console.log("onToggleIsRead", email)
     try {
       await emailService.update({ ...email, isRead: !email.isRead })
       loadEmails()
@@ -112,7 +109,6 @@ export function EmailIndex() {
   }
 
   async function onIsRead(email) {
-    console.log("onIsRead", email)
     try {
       if (email.isRead === true) return
       await emailService.update({ ...email, isRead: !email.isRead })
@@ -176,15 +172,22 @@ export function EmailIndex() {
     }
     setSearchParams(filterForParams)
   }
-
+  function collapseHandle() {
+    setCollapse(() => !collapse)
+  }
   if (!emails) return <div>Loading...</div>
   return (
-    <main className="email-index">
-      <AppHeader filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+    <main className={`email-index ${collapse ? "is-collapse" : ""}`}>
+      <AppHeader
+        filterBy={filterBy}
+        onSetFilterBy={onSetFilterBy}
+        collapseHandle={collapseHandle}
+      />
       <EmailFolderList
         currentLocation={currentLocation}
         searchParams={searchParams}
         unreadEmailCounter={unreadEmailCounter}
+        collapse={collapse}
       />
       {params.emailId ? (
         <Outlet />
@@ -198,6 +201,7 @@ export function EmailIndex() {
           onToggleStarred={onToggleStarred}
           onArchive={onArchive}
           onToggleIsRead={onToggleIsRead}
+          collapse={collapse}
         />
       )}
       {!!compose && (
@@ -206,8 +210,6 @@ export function EmailIndex() {
           onUpdateEmail={onUpdateEmail}
           searchParams={searchParams}
           folder={params.folder}
-          // emailComposeHandle={emailComposeHandle}
-          // onUpdateEmail={onUpdateEmail}
         />
       )}
     </main>
