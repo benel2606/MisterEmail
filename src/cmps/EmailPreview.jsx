@@ -64,7 +64,7 @@ export function EmailPreview({
           <div className="email-separator">-</div>
           <div className="email-body">
             {email.body.length > 100
-              ? email.body.substring(0, 90) + "..."
+              ? email.body.substring(0, 80) + "..."
               : email.body}
           </div>
           <div className="email-sent-at">

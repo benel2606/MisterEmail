@@ -78,7 +78,7 @@ function countUnreadEmails(emails) {
     unreadEmails.sent = Unread.filter(email => (email.fromEmail==getLoggedUser().email)&&(!email.removedAt)&&(!email.isDraft)).length || 0;
     unreadEmails.starred = Unread.filter(email => email.isStarred && !email.removedAt&&(!email.isDraft)).length || 0;
     unreadEmails.trash = Unread.filter(email => email.removedAt ).length || 0;
-    unreadEmails.draft = Unread.filter(email => email.isDraft).length || 0;
+    unreadEmails.draft = Unread.filter((email => (email.isDraft)&&(!email.removedAt))).length || 0;
     return unreadEmails;
 }
 
