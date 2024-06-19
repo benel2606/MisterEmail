@@ -16,9 +16,9 @@ export function EmailPreviewAction({
       </div>
       <div onClick={onToggleIsRead}>
         {email.isRead ? (
-          <GoRead size={20} />
-        ) : (
           <MdOutlineMarkEmailUnread size={20} />
+        ) : (
+          <GoRead size={20} />
         )}
       </div>
       <div onClick={onArchive}>
